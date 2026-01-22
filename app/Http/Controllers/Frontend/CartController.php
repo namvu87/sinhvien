@@ -24,9 +24,13 @@ class CartController extends Controller
     {
         // Chỉ cho phép thêm vào giỏ hàng khi đã đăng nhập
         if (!auth()->check()) {
-            return redirect()->route('frontend.home')
-                ->with('error', 'Vui lòng đăng nhập để mua hàng')
-                ->with('login_required', true);
+            // Lưu URL hiện tại để quay lại sau khi đăng nhập
+            $previousUrl = url()->previous();
+            
+            return redirect($previousUrl)
+                ->with('error', '⚠️ Vui lòng đăng nhập để mua hàng!')
+                ->with('login_required', true)
+                ->with('message_type', 'login_required');
         }
         
         $request->validate([

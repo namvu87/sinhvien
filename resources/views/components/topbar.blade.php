@@ -74,31 +74,47 @@
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-center">Đăng nhập</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <h5 class="modal-title text-center w-100">
+                    <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
+                @if(session('login_required'))
+                <div class="alert alert-warning alert-dismissible fade show" role="alert" style="border-left: 4px solid #ffc107;">
+                    <strong><i class="fas fa-exclamation-triangle"></i> Thông báo:</strong> 
+                    Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng và mua hàng.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
+                
                 <form action="{{ route('login') }}" method="post">
                     @csrf
                     <div class="form-group">
-                        <label class="col-form-label">Email</label>
-                        <input type="email" class="form-control" placeholder=" " name="email" required>
+                        <label class="col-form-label"><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" class="form-control" placeholder="Nhập email của bạn" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label class="col-form-label">Mật khẩu</label>
-                        <input type="password" class="form-control" placeholder=" " name="password" required>
+                        <label class="col-form-label"><i class="fas fa-lock"></i> Mật khẩu</label>
+                        <input type="password" class="form-control" placeholder="Nhập mật khẩu" name="password" required>
                     </div>
                     <div class="form-group">
-                        <a href="{{ route('frontend.forgot-password') }}" class="text-danger">Quên mật khẩu?</a>
+                        <a href="{{ route('frontend.forgot-password') }}" class="text-danger">
+                            <i class="fas fa-question-circle"></i> Quên mật khẩu?
+                        </a>
                     </div>
                     <div class="right-w3l">
-                        <input type="submit" class="form-control" value="Đăng nhập">
+                        <input type="submit" class="form-control btn btn-primary" value="Đăng nhập" style="font-weight: bold;">
                     </div>
                     <p class="text-center dont-do mt-3">Bạn chưa có tài khoản?
-                        <a href="#" data-toggle="modal" data-target="#registerModal" data-dismiss="modal">Đăng ký</a>
+                        <a href="#" data-toggle="modal" data-target="#registerModal" data-dismiss="modal" style="color: #667eea; font-weight: bold;">
+                            <i class="fas fa-user-plus"></i> Đăng ký ngay
+                        </a>
                     </p>
                 </form>
             </div>

@@ -139,14 +139,19 @@
             
             // Tự động mở modal đăng nhập nếu cần
             @if(session('login_required'))
+                // Hiển thị thông báo đặc biệt cho yêu cầu đăng nhập
+                @if(session('message_type') == 'login_required')
+                    showToast('{{ session('error') }}', 'error');
+                @endif
+                
                 setTimeout(function() {
                     $('#loginModal').modal('show');
-                }, 800);
+                }, 1000);
             @endif
             
             function showToast(message, type) {
                 var bgColor = type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8';
-                var icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+                var icon = type === 'success' ? '✓' : type === 'error' ? '⚠️' : 'ℹ';
                 
                 var toast = $('<div>')
                     .addClass('toast-notification')
@@ -172,12 +177,13 @@
                 
                 $('#toast-container').append(toast);
                 
-                // Auto remove after 5 seconds
+                // Auto remove after 7 seconds (lâu hơn cho thông báo quan trọng)
+                var autoRemoveTime = type === 'error' ? 7000 : 5000;
                 setTimeout(function() {
                     toast.fadeOut(300, function() {
                         $(this).remove();
                     });
-                }, 5000);
+                }, autoRemoveTime);
                 
                 // Close button
                 toast.find('.toast-close').click(function() {
